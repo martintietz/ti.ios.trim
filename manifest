@@ -1,0 +1,18 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 0.1
+apiversion: 2
+description: iOS video trimmer
+author: Martin Tietz
+license: MIT
+copyright: Copyright (c) 2013 by Martin Tietz
+
+
+# these should not be edited
+name: ti.ios.trim
+moduleid: ti.ios.trim
+guid: 0294e87c-39ae-4b0f-ab3d-1dd78937bf04
+platform: iphone
+minsdk: 3.1.2.GA

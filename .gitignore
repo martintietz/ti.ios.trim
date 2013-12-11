@@ -1,0 +1,8 @@
+.DS_STORE
+tmp
+bin
+build
+*.plist
+*.xcuserstate
+*.xcscheme
+*.xcuserdatad
