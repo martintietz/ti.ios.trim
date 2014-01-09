@@ -29,6 +29,7 @@ function trimVideo() {
 
 	trimmer.trimVideo({
 		input: inputFile.resolve(),
+		quality: 1,
 		startTime: textFieldStart.value,
 		endTime: textFieldStop.value,
 		success: function(e) {

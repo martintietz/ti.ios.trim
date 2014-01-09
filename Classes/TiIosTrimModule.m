@@ -91,6 +91,7 @@
     ENSURE_SINGLE_ARG_OR_NIL(args, NSDictionary);
 
     NSString *inputFile = [args objectForKey:@"input"];
+    int quality = [TiUtils intValue:[args objectForKey:@"quality"]];
     CGFloat startValue = [TiUtils floatValue:[args objectForKey:@"startTime"]];
     CGFloat endValue = [TiUtils floatValue:[args objectForKey:@"endTime"]];
     id success = [args objectForKey:@"success"];
@@ -112,47 +113,56 @@
 
     AVAsset *anAsset = [[AVURLAsset alloc] initWithURL:videoFileUrl options:nil];
     NSArray *compatiblePresets = [AVAssetExportSession exportPresetsCompatibleWithAsset:anAsset];
-    if ([compatiblePresets containsObject:AVAssetExportPresetMediumQuality]) {
 
-        AVAssetExportSession *exportSession = [[AVAssetExportSession alloc]
-                              initWithAsset:anAsset presetName:AVAssetExportPresetPassthrough];
-
-        exportSession.outputURL = furl;
-        exportSession.outputFileType = AVFileTypeQuickTimeMovie;
-
-        CMTime startTime = CMTimeMakeWithSeconds(startValue, 1);
-        CMTime stopTime = CMTimeMakeWithSeconds(endValue, 1);
-        CMTimeRange range = CMTimeRangeFromTimeToTime(startTime, stopTime);
-        exportSession.timeRange = range;
-
-        [exportSession exportAsynchronouslyWithCompletionHandler:^{
-
-            switch ([exportSession status]) {
-                case AVAssetExportSessionStatusCompleted:
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        NSLog(@"Export Complete %d %@", exportSession.status, exportSession.error);
-
-                        NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:furl,@"videoURL",nil];
-                        [self _fireEventToListener:@"success" withObject:event listener:successCallback thisObject:nil];
-                    });
-                    break;
-                case AVAssetExportSessionStatusFailed:
-                    NSLog(@"Export failed: %@", [[exportSession error] localizedDescription]);
-                    NSLog(@"%@", [exportSession.error description]);
-
-                    NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:[exportSession.error description],@"error",nil];
-                    [self _fireEventToListener:@"error" withObject:event listener:errorCallback thisObject:nil];
-                    break;
-                case AVAssetExportSessionStatusCancelled:
-                    NSLog(@"Export canceled");
-                    break;
-                default:
-                    NSLog(@"NONE");
-                    break;
-            }
-        }];
-
+    NSString *presetName = AVAssetExportPresetPassthrough;
+    if (quality == 1 && [compatiblePresets containsObject:AVAssetExportPresetLowQuality]) {
+        presetName = AVAssetExportPresetLowQuality;
     }
+    else if (quality == 2 && [compatiblePresets containsObject:AVAssetExportPresetMediumQuality]) {
+        presetName = AVAssetExportPresetMediumQuality;
+    }
+    else if (quality == 3 && [compatiblePresets containsObject:AVAssetExportPresetHighestQuality]) {
+        presetName = AVAssetExportPresetHighestQuality;
+    }
+
+    AVAssetExportSession *exportSession = [[AVAssetExportSession alloc]
+                          initWithAsset:anAsset presetName:presetName];
+
+    exportSession.outputURL = furl;
+    exportSession.outputFileType = AVFileTypeQuickTimeMovie;
+
+    CMTime startTime = CMTimeMakeWithSeconds(startValue, 1);
+    CMTime stopTime = CMTimeMakeWithSeconds(endValue, 1);
+    CMTimeRange range = CMTimeRangeFromTimeToTime(startTime, stopTime);
+    exportSession.timeRange = range;
+
+    [exportSession exportAsynchronouslyWithCompletionHandler:^{
+
+        switch ([exportSession status]) {
+            case AVAssetExportSessionStatusCompleted:
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    NSLog(@"Export Complete %d %@", exportSession.status, exportSession.error);
+
+                    NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:furl,@"videoURL",nil];
+                    [self _fireEventToListener:@"success" withObject:event listener:successCallback thisObject:nil];
+                });
+                break;
+            case AVAssetExportSessionStatusFailed:
+                NSLog(@"Export failed: %@", [[exportSession error] localizedDescription]);
+                NSLog(@"%@", [exportSession.error description]);
+
+                NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:[exportSession.error description],@"error",nil];
+                [self _fireEventToListener:@"error" withObject:event listener:errorCallback thisObject:nil];
+                break;
+            case AVAssetExportSessionStatusCancelled:
+                NSLog(@"Export canceled");
+                break;
+            default:
+                NSLog(@"NONE");
+                break;
+        }
+    }];
+
 }
 
 - (void) removeFile:(NSURL *)fileURL

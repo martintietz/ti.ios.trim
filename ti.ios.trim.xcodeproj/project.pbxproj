@@ -36,19 +36,19 @@
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = "ti.ios.trim";
+			remoteInfo = ti.ios.trim;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		24DD6CF71134B3F500162E58 /* TiIosTrimModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TiIosTrimModule.h"; path = "Classes/TiIosTrimModule.h"; sourceTree = "<group>"; };
-		24DD6CF81134B3F500162E58 /* TiIosTrimModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TiIosTrimModule.m"; path = "Classes/TiIosTrimModule.m"; sourceTree = "<group>"; };
+		24DD6CF71134B3F500162E58 /* TiIosTrimModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TiIosTrimModule.h; path = Classes/TiIosTrimModule.h; sourceTree = "<group>"; };
+		24DD6CF81134B3F500162E58 /* TiIosTrimModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TiIosTrimModule.m; path = Classes/TiIosTrimModule.m; sourceTree = "<group>"; };
 		24DD6D1B1134B66800162E58 /* titanium.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = titanium.xcconfig; sourceTree = "<group>"; };
-		24DE9E0F11C5FE74003F90F6 /* TiIosTrimModuleAssets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TiIosTrimModuleAssets.h"; path = "Classes/TiIosTrimModuleAssets.h"; sourceTree = "<group>"; };
-		24DE9E1011C5FE74003F90F6 /* TiIosTrimModuleAssets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TiIosTrimModuleAssets.m"; path = "Classes/TiIosTrimModuleAssets.m"; sourceTree = "<group>"; };
-		AA747D9E0F9514B9006C5449 /* TiIosTrim_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TiIosTrim_Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		24DE9E0F11C5FE74003F90F6 /* TiIosTrimModuleAssets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TiIosTrimModuleAssets.h; path = Classes/TiIosTrimModuleAssets.h; sourceTree = "<group>"; };
+		24DE9E1011C5FE74003F90F6 /* TiIosTrimModuleAssets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TiIosTrimModuleAssets.m; path = Classes/TiIosTrimModuleAssets.m; sourceTree = "<group>"; };
+		AA747D9E0F9514B9006C5449 /* TiIosTrim_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TiIosTrim_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		D2AAC07E0554694100DB518D /* libTiIosTrim.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libTiIosTrim.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2AAC07E0554694100DB518D /* libTiIosTrim.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTiIosTrim.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +79,7 @@
 				0867D69AFE84028FC02AAC07 /* Frameworks */,
 				034768DFFF38A50411DB9C8B /* Products */,
 			);
-			name = "ti.ios.trim";
+			name = ti.ios.trim;
 			sourceTree = "<group>";
 		};
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
@@ -138,8 +138,8 @@
 			);
 			dependencies = (
 			);
-			name = "ti.ios.trim";
-			productName = "ti.ios.trim";
+			name = ti.ios.trim;
+			productName = ti.ios.trim;
 			productReference = D2AAC07E0554694100DB518D /* libTiIosTrim.a */;
 			productType = "com.apple.product-type.library.static";
 		};
@@ -148,6 +148,8 @@
 /* Begin PBXProject section */
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "ti.ios.trim" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
@@ -212,11 +214,11 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DSTROOT = "/tmp/TiIosTrim.dst";
+				DSTROOT = /tmp/TiIosTrim.dst;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TiIosTrim_Prefix.pch";
+				GCC_PREFIX_HEADER = TiIosTrim_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "TI_VERSION=$(TI_VERSION)";
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = "";
@@ -235,7 +237,7 @@
 					"-DTI_POST_1_2",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "TiIosTrim";
+				PRODUCT_NAME = TiIosTrim;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				RUN_CLANG_STATIC_ANALYZER = NO;
@@ -249,11 +251,11 @@
 			baseConfigurationReference = 24DD6D1B1134B66800162E58 /* titanium.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				DSTROOT = "/tmp/TiIosTrim.dst";
+				DSTROOT = /tmp/TiIosTrim.dst;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TiIosTrim_Prefix.pch";
+				GCC_PREFIX_HEADER = TiIosTrim_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "TI_VERSION=$(TI_VERSION)";
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = "";
@@ -270,7 +272,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "-DTI_POST_1_2";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "TiIosTrim";
+				PRODUCT_NAME = TiIosTrim;
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -283,11 +285,11 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DSTROOT = "/tmp/TiIosTrim.dst";
+				DSTROOT = /tmp/TiIosTrim.dst;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TiIosTrim_Prefix.pch";
+				GCC_PREFIX_HEADER = TiIosTrim_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "TI_VERSION=$(TI_VERSION)";
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = "";
@@ -305,7 +307,7 @@
 					"-DTI_POST_1_2",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "TiIosTrim";
+				PRODUCT_NAME = TiIosTrim;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				RUN_CLANG_STATIC_ANALYZER = NO;
@@ -319,11 +321,11 @@
 			baseConfigurationReference = 24DD6D1B1134B66800162E58 /* titanium.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				DSTROOT = "/tmp/TiIosTrim.dst";
+				DSTROOT = /tmp/TiIosTrim.dst;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TiIosTrim_Prefix.pch";
+				GCC_PREFIX_HEADER = TiIosTrim_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "TI_VERSION=$(TI_VERSION)";
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = "";
@@ -339,7 +341,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DTI_POST_1_2";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "TiIosTrim";
+				PRODUCT_NAME = TiIosTrim;
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "";

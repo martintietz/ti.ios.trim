@@ -2,7 +2,7 @@
 
 ## Description
 
-This module extends the Appcelerator Titanium Mobile framework and allows trimming videos on iOS. This is currently not possible using Titanium's VideoPlayer:
+This module extends the Appcelerator Titanium Mobile framework and allows trimming and compressing videos on iOS. This is currently not possible using Titanium's VideoPlayer:
 
 [[#TIMOB-1816] iOS: Phone &gt; Record Video, edit/trimming is not shown in playback - Appcelerator JIRA](https://jira.appcelerator.org/browse/TIMOB-1816)
 [[#TIMOB-4200] iOS - Edit mode on record video returns entire video - Appcelerator JIRA](https://jira.appcelerator.org/browse/TIMOB-4200)
@@ -23,36 +23,47 @@ Simply add the following lines to your `tiapp.xml` file:
 
 To access this module from JavaScript, you would do the following:
 
-	var trimmer = require('ti.ios.trim');
+    var trimmer = require('ti.ios.trim');
 
 The trimmer variable is a reference to the Module object.
-
+a
 ## Reference
 
 ### trimVideo({Object} options)
 
 `options` can have the following keys:
 
-* *input* - the path to video file to be trimmed
-* *startTime* - beginning of the trimmed movie (in seconds)
-* *endTime* - end of the trimmed movie (in seconds)
-* *success* - callback to be invoked after successful trimming
-* *error* - callback to be invoked in case of an error
+* ```input```
+    * the path to video file to be trimmed
+* ```quality``` (optional)
+    * the quality of the output video (1 = low, 2 = medium, 3 = high). Just as an orientation: the example .mp4 file has a size of 15.3 MB and the output file (no trimming, only compression) sizes are the following: 1.12 MB (low), 6.12 MB (medium), 15.26 (high)
+* ```startTime```
+    * beginning of the trimmed movie (in seconds)
+* ```endTime```
+    * end of the trimmed movie (in seconds)
+* ```success```
+    * callback to be invoked after successful trimming
+* ```error```
+    * callback to be invoked in case of an error
 
 ```javascript
 var inputFile = Ti.Filesystem.getFile('path/to/videoFile');
 trimmer.trimVideo({
-	input: inputFile.resolve(),
-	startTime: 0,
-	endTime: 10,
-	success: function(e) {
-		alert('SUCCESS, path to trimmed file: '+ e.videoURL);
-	},
-	error: function(e) {
-		alert('ERROR, information: '+ JSON.stringify(e));
-	}
+    input: inputFile.resolve(),
+    quality: 1,
+    startTime: 0,
+    endTime: 10,
+    success: function(e) {
+        alert('SUCCESS, path to trimmed file: '+ e.videoURL);
+    },
+    error: function(e) {
+        alert('ERROR, information: '+ JSON.stringify(e));
+    }
 });
 ```
+
+## Changelog
+* 0.1: Initial version
 
 ## Author
 
@@ -62,7 +73,7 @@ email: info@martin-tietz.com
 
 ## License
 
-	Copyright (c) 2013 Martin Tietz
+    Copyright (c) 2013 Martin Tietz
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
