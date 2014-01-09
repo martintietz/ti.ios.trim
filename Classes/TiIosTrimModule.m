@@ -92,8 +92,8 @@
 
     NSString *inputFile = [args objectForKey:@"input"];
     int quality = [TiUtils intValue:[args objectForKey:@"quality"]];
-    CGFloat startValue = [TiUtils floatValue:[args objectForKey:@"startTime"]];
-    CGFloat endValue = [TiUtils floatValue:[args objectForKey:@"endTime"]];
+    NSString *startValue = [args objectForKey:@"startTime"];
+    NSString *endValue = [args objectForKey:@"endTime"];
     id success = [args objectForKey:@"success"];
     id error = [args objectForKey:@"error"];
     RELEASE_TO_NIL(successCallback);
@@ -101,6 +101,7 @@
     successCallback = [success retain];
     errorCallback = [error retain];
 
+    // create a url for the input video file
     NSURL *videoFileUrl;
     if ([inputFile hasPrefix:@"assets-library"]) {
         videoFileUrl = [NSURL URLWithString:inputFile];
@@ -130,6 +131,16 @@
     else if (quality == 3 && [compatiblePresets containsObject:AVAssetExportPresetHighestQuality]) {
         presetName = AVAssetExportPresetHighestQuality;
     }
+    
+    // set the start and end times
+    CGFloat start = 0;
+    CGFloat end = CMTimeGetSeconds(anAsset.duration);
+    if (startValue != nil) {
+        start = [TiUtils floatValue:startValue];
+    }
+    if (endValue != nil) {
+        end = [TiUtils floatValue:endValue];
+    }
 
     AVAssetExportSession *exportSession = [[AVAssetExportSession alloc]
                           initWithAsset:anAsset presetName:presetName];
@@ -137,8 +148,8 @@
     exportSession.outputURL = furl;
     exportSession.outputFileType = AVFileTypeQuickTimeMovie;
 
-    CMTime startTime = CMTimeMakeWithSeconds(startValue, 1);
-    CMTime stopTime = CMTimeMakeWithSeconds(endValue, 1);
+    CMTime startTime = CMTimeMakeWithSeconds(start, 1);
+    CMTime stopTime = CMTimeMakeWithSeconds(end, 1);
     CMTimeRange range = CMTimeRangeFromTimeToTime(startTime, stopTime);
     exportSession.timeRange = range;
 

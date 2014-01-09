@@ -7,7 +7,7 @@ var textFieldOptions = {
 	keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD
 };
 
-var win = Ti.UI.createWindow({ backgroundColor: 'black', layout: 'vertical' });
+var win = Ti.UI.createWindow({ backgroundColor: 'black', layout: 'vertical', top: 20 });
 var textFieldStart = Ti.UI.createTextField(textFieldOptions);
 win.add(textFieldStart);
 var textFieldStop = Ti.UI.createTextField(textFieldOptions);

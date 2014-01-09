@@ -35,11 +35,13 @@ a
 
 * ```input```
     * the path to video file to be trimmed
+    * this has to be either an absolute file path (via file.resolve()) or a path to an object inside the asset library (e.g. using the [TiAssetsLibrary Module](https://github.com/omorandi/TiAssetsLibrary))
 * ```quality``` (optional)
-    * the quality of the output video (1 = low, 2 = medium, 3 = high). Just as an orientation: the example .mp4 file has a size of 15.3 MB and the output file (no trimming, only compression) sizes are the following: 1.12 MB (low), 6.12 MB (medium), 15.26 (high)
-* ```startTime```
+    * the quality of the output video (1 = low, 2 = medium, 3 = high)
+    * as an orientation: the example .mp4 file has a size of 15.3 MB and the output file (no trimming, only compression) sizes are the following: 1.12 MB (low), 6.12 MB (medium), 15.26 (high)
+* ```startTime``` (optional, default: 0)
     * beginning of the trimmed movie (in seconds)
-* ```endTime```
+* ```endTime``` (optional, default: duration of the video file)
     * end of the trimmed movie (in seconds)
 * ```success```
     * callback to be invoked after successful trimming
@@ -63,6 +65,10 @@ trimmer.trimVideo({
 ```
 
 ## Changelog
+* 0.2:
+    * adds an optional ```quality``` parameter to compress videos
+    * adds support for video files inside the asset library
+    * makes ```startTime``` and ```endTime``` optional
 * 0.1: Initial version
 
 ## Author
