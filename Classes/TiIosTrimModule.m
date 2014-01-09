@@ -101,7 +101,13 @@
     successCallback = [success retain];
     errorCallback = [error retain];
 
-    NSURL *videoFileUrl = [NSURL fileURLWithPath:inputFile];
+    NSURL *videoFileUrl;
+    if ([inputFile hasPrefix:@"assets-library"]) {
+        videoFileUrl = [NSURL URLWithString:inputFile];
+    }
+    else {
+        videoFileUrl = [NSURL fileURLWithPath:inputFile];
+    }
 
     // generate a temporary output file
     NSString *tempDir = NSTemporaryDirectory();
