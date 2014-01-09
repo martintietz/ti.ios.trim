@@ -16,7 +16,7 @@ Find the newest version in the dist folder.
 Simply add the following lines to your `tiapp.xml` file:
 
     <modules>
-        <module platform="iphone" version="0.1">ti.ios.trim</module>
+        <module platform="iphone" version="0.2">ti.ios.trim</module>
     </modules>
 
 ### Accessing the module
