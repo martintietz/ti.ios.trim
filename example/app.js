@@ -29,10 +29,11 @@ function trimVideo() {
 
 	trimmer.trimVideo({
 		input: inputFile.resolve(),
-		quality: 1,
+		quality: 3,
 		startTime: textFieldStart.value,
 		endTime: textFieldStop.value,
 		success: function(e) {
+			showThumbnail(e.thumbnail);
 			playVideo(e.videoURL);
 			button.enabled = true;
 		},
@@ -41,6 +42,11 @@ function trimVideo() {
 			button.enabled = true;
 		}
 	});
+}
+
+function showThumbnail(thumbnail) {
+	var thumbnailView = Ti.UI.createImageView({ image: thumbnail });
+	win.add(thumbnailView);
 }
 
 function playVideo(videoURL) {

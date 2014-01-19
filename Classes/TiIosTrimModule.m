@@ -9,6 +9,10 @@
 #import "TiHost.h"
 #import "TiUtils.h"
 
+@interface TiIosTrimModule ()
+@property (strong, nonatomic) NSURL *outputUrl;
+@end
+
 @implementation TiIosTrimModule
 
 #pragma mark Internal
@@ -98,27 +102,27 @@
     id error = [args objectForKey:@"error"];
     RELEASE_TO_NIL(successCallback);
     RELEASE_TO_NIL(errorCallback);
-    successCallback = [success retain];
-    errorCallback = [error retain];
+    self->successCallback = [success retain];
+    self->errorCallback = [error retain];
 
     // create a url for the input video file
-    NSURL *videoFileUrl;
+    NSURL *inputUrl;
     if ([inputFile hasPrefix:@"assets-library"]) {
-        videoFileUrl = [NSURL URLWithString:inputFile];
+        inputUrl = [NSURL URLWithString:inputFile];
     }
     else {
-        videoFileUrl = [NSURL fileURLWithPath:inputFile];
+        inputUrl = [NSURL fileURLWithPath:inputFile];
     }
 
     // generate a temporary output file
     NSString *tempDir = NSTemporaryDirectory();
     NSString *tmpVideoPath = [tempDir stringByAppendingPathComponent:@"tmpMov.mov"];
-    NSURL *furl = [NSURL fileURLWithPath:tmpVideoPath];
+    self.outputUrl = [NSURL fileURLWithPath:tmpVideoPath];
 
     // clear the output file
-    [self removeFile:furl];
+    [self removeFile:self.outputUrl];
 
-    AVAsset *anAsset = [[AVURLAsset alloc] initWithURL:videoFileUrl options:nil];
+    AVAsset *anAsset = [[AVURLAsset alloc] initWithURL:inputUrl options:nil];
     NSArray *compatiblePresets = [AVAssetExportSession exportPresetsCompatibleWithAsset:anAsset];
 
     NSString *presetName = AVAssetExportPresetPassthrough;
@@ -145,11 +149,12 @@
     AVAssetExportSession *exportSession = [[AVAssetExportSession alloc]
                           initWithAsset:anAsset presetName:presetName];
 
-    exportSession.outputURL = furl;
+    exportSession.outputURL = self.outputUrl;
     exportSession.outputFileType = AVFileTypeQuickTimeMovie;
 
     CMTime startTime = CMTimeMakeWithSeconds(start, 1);
     CMTime stopTime = CMTimeMakeWithSeconds(end, 1);
+    CGFloat thumbnailTime = (end - start) / 2;
     CMTimeRange range = CMTimeRangeFromTimeToTime(startTime, stopTime);
     exportSession.timeRange = range;
 
@@ -159,9 +164,7 @@
             case AVAssetExportSessionStatusCompleted:
                 dispatch_async(dispatch_get_main_queue(), ^{
                     NSLog(@"Export Complete %d %@", exportSession.status, exportSession.error);
-
-                    NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:furl,@"videoURL",nil];
-                    [self _fireEventToListener:@"success" withObject:event listener:successCallback thisObject:nil];
+                    [self generateThumbnail:thumbnailTime];
                 });
                 break;
             case AVAssetExportSessionStatusFailed:
@@ -169,7 +172,7 @@
                 NSLog(@"%@", [exportSession.error description]);
 
                 NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:[exportSession.error description],@"error",nil];
-                [self _fireEventToListener:@"error" withObject:event listener:errorCallback thisObject:nil];
+                [self _fireEventToListener:@"error" withObject:event listener:self->errorCallback thisObject:nil];
                 break;
             case AVAssetExportSessionStatusCancelled:
                 NSLog(@"Export canceled");
@@ -179,7 +182,6 @@
                 break;
         }
     }];
-
 }
 
 - (void) removeFile:(NSURL *)fileURL
@@ -192,6 +194,42 @@
             NSLog(@"removeItemAtPath %@ error:%@", filePath, error);
         }
     }
+}
+
+- (void) generateThumbnail:(CGFloat)thumbnailTime
+{
+    MPMoviePlayerController *movie = [[MPMoviePlayerController alloc] initWithContentURL:self.outputUrl];
+    movie.shouldAutoplay = NO;
+    NSNumber *halfDuration = [NSNumber numberWithFloat:thumbnailTime];
+    NSArray *times = [NSArray arrayWithObjects:halfDuration, nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleThumbnailImageRequestFinishNotification:) name:MPMoviePlayerThumbnailImageRequestDidFinishNotification object:movie];
+    
+    [movie requestThumbnailImagesAtTimes:times timeOption:MPMovieTimeOptionExact];
+}
+
+-(void) handleThumbnailImageRequestFinishNotification:(NSNotification *)note
+{
+    NSDictionary *userinfo = [note userInfo];
+    NSError* value = [userinfo objectForKey:MPMoviePlayerThumbnailErrorKey];
+    
+    if (value != nil) {
+        NSLog(@"Error: %@", [value debugDescription]);
+    }
+    else
+    {
+        UIImage *image = [userinfo valueForKey:MPMoviePlayerThumbnailImageKey];
+        [self sendSuccessCallbackWithThumbnail:image];
+    }
+}
+
+-(void) sendSuccessCallbackWithThumbnail:(UIImage *) thumbnail
+{
+    NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:
+                           self.outputUrl, @"videoURL",
+                           [[[TiBlob alloc] initWithImage:thumbnail] autorelease], @"thumbnail",
+                           nil];
+    [self _fireEventToListener:@"success" withObject:event listener:self->successCallback thisObject:nil];
 }
 
 @end

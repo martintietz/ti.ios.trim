@@ -45,6 +45,9 @@ a
     * end of the trimmed movie (in seconds)
 * ```success```
     * callback to be invoked after successful trimming
+    * the callback is passed an object that has the following properties:
+        * ```thumbnail```: the thumbnail of the video as an image blob
+        * ```videoUrl```: the path to the trimmed video file
 * ```error```
     * callback to be invoked in case of an error
 
@@ -56,15 +59,19 @@ trimmer.trimVideo({
     startTime: 0,
     endTime: 10,
     success: function(e) {
-        alert('SUCCESS, path to trimmed file: '+ e.videoURL);
+        Ti.API.info('SUCCESS:');
+        Ti.API.info('path to trimmed file: '+ e.videoURL);
     },
     error: function(e) {
-        alert('ERROR, information: '+ JSON.stringify(e));
+        Ti.API.error('ERROR:');
+        Ti.API.info(JSON.stringify(e));
     }
 });
 ```
 
 ## Changelog
+* 0.3:
+    * adds the thumbnail of the trimmed video to the success callback
 * 0.2:
     * adds an optional ```quality``` parameter to compress videos
     * adds support for video files inside the asset library
