@@ -47,7 +47,7 @@ a
     * callback to be invoked after successful trimming
     * the callback is passed an object that has the following properties:
         * ```thumbnail```: the thumbnail of the video as an image blob
-        * ```videoUrl```: the path to the trimmed video file
+        * ```videoURL```: the path to the trimmed video file
 * ```error```
     * callback to be invoked in case of an error
 
