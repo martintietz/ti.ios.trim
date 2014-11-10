@@ -1,3 +1,11 @@
+- - -
+
+**_This project is not actively maintained. Proceed at your own risk!_** 
+
+(If you're willing to take over, please leave a message at [#5](/../../issues/5))
+
+- - -
+
 # ti.ios.trim Module
 
 ## Description
